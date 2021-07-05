@@ -397,6 +397,7 @@ footer {
     height: auto;
     grid-template-columns: 35% auto 35%;
   }
+
   .menu-links li:first-child {
     padding-block-start: 0%;
     padding-inline-start: 80px;
@@ -434,10 +435,18 @@ footer {
   }
 }
 
+.menu-links li a span {
+  opacity: 0;
+}
+
 @media screen and (max-width: 733px) {
   .nav-menu {
     display: none;
     transform: translateX(-100%);
+  }
+
+  .menu-links li a span {
+    opacity: 1;
   }
 
   #logo {
