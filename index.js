@@ -112,11 +112,12 @@ const onMouseEnter = () => {
 const onMouseLeave = () => {
   navLinks.style.display = 'none'
   icon.classList.remove('morpharrow')
-  tl.from(
-    '.menu-links li a span',
-
-    { x: -100, opacity: 0, duration: 0.3, ease: 'sine.inOut' }
-  )
+  tl.from('.menu-links li a span', {
+    x: -100,
+    opacity: 0,
+    duration: 0.3,
+    ease: 'sine.inOut',
+  })
 }
 
 const mobileAnimation = () => {
@@ -138,10 +139,18 @@ const mobileAnimation = () => {
 }
 
 const handleResize = (e) => {
-  if (e[0].contentRect.width > 1000) {
+  if (e[0].contentRect.width > 1100) {
     desktopAnimation()
   } else {
     social.style.visibility = 'hidden'
+    icon.addEventListener('click', mobileAnimation)
+  }
+
+  console.log(e[0].contentRect.width)
+
+  // if width is b/w 1116-1200
+  if (e[0].contentRect.width > 1101 && e[0].contentRect.width < 1184) {
+    console.log(e[0].contentRect.width)
     icon.addEventListener('click', mobileAnimation)
   }
 }
