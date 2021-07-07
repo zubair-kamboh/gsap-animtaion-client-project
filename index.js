@@ -143,14 +143,13 @@ const handleResize = (e) => {
     desktopAnimation()
   } else {
     social.style.visibility = 'hidden'
+    navMenu.style.pointerEvents = 'auto'
     icon.addEventListener('click', mobileAnimation)
   }
 
-  console.log(e[0].contentRect.width)
-
   // if width is b/w 1116-1200
   if (e[0].contentRect.width > 1101 && e[0].contentRect.width < 1184) {
-    console.log(e[0].contentRect.width)
+    navMenu.style.pointerEvents = 'auto'
     icon.addEventListener('click', mobileAnimation)
   }
 }
