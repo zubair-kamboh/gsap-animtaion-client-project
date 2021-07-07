@@ -112,10 +112,10 @@ const onMouseEnter = () => {
 const onMouseLeave = () => {
   navLinks.style.display = 'none'
   icon.classList.remove('morpharrow')
-  tl.fromTo(
+  tl.from(
     '.menu-links li a span',
-    { x: 35, opacity: 1, ease: 'sine.inOut', duration: 0.6 },
-    { x: -100, opacity: 0, duration: 0.6, ease: 'sine.inOut' }
+
+    { x: -100, opacity: 0, duration: 0.3, ease: 'sine.inOut' }
   )
 }
 
