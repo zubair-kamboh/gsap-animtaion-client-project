@@ -2,71 +2,163 @@ const icon = document.querySelector('.icon-top')
 const header = document.querySelector('#header')
 const navLinks = document.querySelector('#menu .menu-links')
 const navLinksLi = document.querySelectorAll('.menu-links li')
+const social = document.querySelector('#social')
+const navMenu = document.querySelector('.nav-menu')
 
+const tl = gsap.timeline()
+
+// icon.toggleEventListener('click', () => {
+//   navLinks.style.display = 'flex'
+// })
+
+// const handleResize = (e) => {
+//   if (e[0].contentRect.width > 733) {
+//     desktopAnimation()
+//   } else {
+//     mobileAnimation()
+//   }
+// }
+
+// const desktopAnimation = () => {
+//   header.addEventListener('mouseenter', (e) => {
+//     icon.classList.toggle('morpharrow')
+//     tl.fromTo(
+//       '.menu-links li a span',
+//       { x: -100, opacity: 0, duration: 0.6, ease: 'sine.inOut' },
+//       { x: 35, opacity: 1, ease: 'sine.inOut', duration: 0.6 }
+//     )
+//   })
+
+//   header.addEventListener('mouseleave', () => {
+//     icon.classList.toggle('morpharrow')
+//     tl.fromTo(
+//       '.menu-links li a span',
+//       { x: 35, opacity: 1, ease: 'sine.inOut', duration: 0.6 },
+//       { x: -100, opacity: 0, duration: 0.6, ease: 'sine.inOut' }
+//     )
+//   })
+// }
+
+// const mobileAnimation = () => {
+//   const menu = document.querySelector('.nav-menu')
+
+//   icon.addEventListener('click', () => {
+//     menu.classList.toggle('menuTransition')
+//     icon.classList.toggle('morpharrow')
+//   })
+// }
+
+// const resizer = new ResizeObserver(handleResize)
+// resizer.observe(document.querySelector('body'))
+
+// const menu = document.querySelector('.nav-menu')
+
+// icon.addEventListener('click', () => {
+//   menu.classList.toggle('menuTransition')
+//   icon.classList.toggle('morpharrow')
+// })
+
+// On mobile screen
+// if (window.matchMedia('(max-width: 733px)').matches) {
+//   const menu = document.querySelector('.nav-menu')
+
+//   icon.addEventListener('click', () => {
+//     menu.classList.toggle('menuTransition')
+//     icon.classList.toggle('morpharrow')
+//   })
+// }
+
+// On desktop screen
+// if (window.matchMedia('(min-width: 733px)').matches) {
+//   const icon = document.querySelector('.icon-top')
+
+//   header.addEventListener('mouseenter', () => {
+//     icon.classList.toggle('morpharrow')
+//     tl.fromTo(
+//       '.menu-links li a span',
+//       { x: -100, opacity: 0, duration: 0.6, ease: 'sine.inOut' },
+//       { x: 35, opacity: 1, ease: 'sine.inOut', duration: 0.6 }
+//     )
+//   })
+
+//   header.addEventListener('mouseleave', () => {
+//     icon.classList.toggle('morpharrow')
+//     tl.fromTo(
+//       '.menu-links li a span',
+//       { x: 35, opacity: 1, ease: 'sine.inOut', duration: 0.6 },
+//       { x: -100, opacity: 0, duration: 0.6, ease: 'sine.inOut' }
+//     )
+//   })
+// }
+
+const desktopAnimation = () => {
+  icon.removeEventListener('click', mobileAnimation)
+
+  icon.addEventListener('mouseenter', onMouseEnter)
+  navLinks.addEventListener('mouseleave', onMouseLeave)
+}
+
+// on mouse enter
 const onMouseEnter = () => {
-  icon.classList.toggle('morpharrow')
-
-  navLinks.classList.add('onMenuHover')
-
-  // Animate links
-  navLinksLi.forEach((li, i) => {
-    if (li.style.animation) {
-      li.style.animation = ''
-    } else {
-      li.style.animation = `navLinkFade 0.2s ease-in forwards ${i / 7}s`
-    }
-  })
+  navLinks.style.display = 'flex'
+  icon.classList.add('morpharrow')
+  tl.fromTo(
+    '.menu-links li a span',
+    { x: -100, opacity: 0, duration: 0.6, ease: 'sine.inOut' },
+    { x: 35, opacity: 1, ease: 'sine.inOut', duration: 0.6 }
+  )
 }
 
-// On mouse leave
 const onMouseLeave = () => {
-  icon.classList.toggle('morpharrow')
-
-  navLinks.classList.remove('onMenuHover')
-
-  // Animate links
-  navLinksLi.forEach((li, i) => {
-    if (li.style.animation) {
-      li.style.animation = ''
-    } else {
-      li.style.animation = `navLinkFadeOut 0.5s ease-out forwards ${
-        i / 7 + 0.2
-      }s`
-    }
-  })
+  navLinks.style.display = 'none'
+  icon.classList.remove('morpharrow')
+  tl.fromTo(
+    '.menu-links li a span',
+    { x: 35, opacity: 1, ease: 'sine.inOut', duration: 0.6 },
+    { x: -100, opacity: 0, duration: 0.6, ease: 'sine.inOut' }
+  )
 }
 
-// On menu click
-const onMenuClick = () => {
-  const menu = document.querySelector('#menu')
-  menu.classList.toggle('onMenuClick')
+const mobileAnimation = () => {
+  icon.removeEventListener('mouseenter', onMouseEnter)
+  navLinks.removeEventListener('mouseleave', onMouseLeave)
+
+  if (navMenu.classList.contains('navSlide')) {
+    icon.classList.remove('morpharrow')
+    navMenu.classList.remove('navSlide')
+  } else {
+    icon.classList.add('morpharrow')
+
+    social.style.visibility = 'visible'
+    navMenu.classList.add('navSlide')
+  }
+
+  const doc = document.querySelector('body')
+  document.addEventListener('click', onDocumentClick)
 }
 
 const handleResize = (e) => {
-  if (e[0].contentRect.width < 1200) {
-    icon.removeEventListener('mouseenter', onMouseEnter)
-    navLinks.removeEventListener('mouseleave', onMouseLeave)
-
-    icon.addEventListener('click', onMenuClick)
-
-    // Remove animation on document click
-    const doc = document.querySelector('body')
-    doc.addEventListener('click', (e) => {
-      const menu = document.querySelector('#menu')
-
-      const classClick = e.target.classList
-
-      if (classClick.contains('nav-menu')) {
-        menu.classList.remove('onMenuClick')
-      }
-    })
+  if (e[0].contentRect.width > 1000) {
+    desktopAnimation()
   } else {
-    // remove menu click listener
-    icon.removeEventListener('click', onMenuClick)
+    social.style.visibility = 'hidden'
+    icon.addEventListener('click', mobileAnimation)
+  }
+}
 
-    // add mouseenter & mouseleave
-    icon.addEventListener('mouseenter', onMouseEnter)
-    navLinks.addEventListener('mouseleave', onMouseLeave)
+// on Document Click
+const onDocumentClick = (e) => {
+  const divclass = e.target.classList
+  if (
+    divclass.contains('snap') ||
+    divclass.contains('main') ||
+    divclass.contains('left-panel') ||
+    divclass.contains('right-panel') ||
+    divclass.contains('left-vertical-slice') ||
+    divclass.contains('right-vertical-slice')
+  ) {
+    icon.classList.remove('morpharrow')
+    navMenu.classList.remove('navSlide')
   }
 }
 
